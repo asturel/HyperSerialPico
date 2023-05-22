@@ -237,9 +237,11 @@ class
 				color.W = std::min(channelCorrection.red[color.R],
 								std::min(channelCorrection.green[color.G],
 									channelCorrection.blue[color.B]));
+		#if ACCURATE_COLORS
 				color.R -= channelCorrection.red[color.W];
 				color.G -= channelCorrection.green[color.W];
 				color.B -= channelCorrection.blue[color.W];
+		#endif
 				color.W = channelCorrection.white[color.W];
 			}
 		#endif

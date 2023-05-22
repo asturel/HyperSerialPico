@@ -79,7 +79,11 @@
 	#pragma message(VAR_NAME_VALUE(CLOCK_PIN))
 #endif
 
-#if defined(SECOND_SEGMENT_START_INDEX)	
+#if ACCURATE_COLORS
+    #pragma message("Using accurate algorithm for white calculation")
+#else
+    #pragma message("Using dual algorithm for white calculation")
+#endif
 	#pragma message("Using parallel mode for segments")
 
 	#ifdef NEOPIXEL_RGBW
