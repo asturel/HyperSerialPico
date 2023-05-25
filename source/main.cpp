@@ -79,12 +79,18 @@
 	#pragma message(VAR_NAME_VALUE(CLOCK_PIN))
 #endif
 
+#ifdef CS_PIN
+	#pragma message(VAR_NAME_VALUE(CS_PIN))
+#endif
+
 #if ACCURATE_COLORS
     #pragma message("Using accurate algorithm for white calculation")
 #else
     #pragma message("Using dual algorithm for white calculation")
 #endif
-	#pragma message("Using parallel mode for segments")
+
+#if defined(SECOND_SEGMENT_START_INDEX)
+    #pragma message("Using parallel mode for segments")
 
 	#ifdef NEOPIXEL_RGBW
 			#undef LED_DRIVER
@@ -97,7 +103,7 @@
 	#else
 		#error "Parallel mode is unsupportd for selected LEDs configuration"
 	#endif
-	
+
 	#pragma message(VAR_NAME_VALUE(LED_DRIVER))
 	#pragma message(VAR_NAME_VALUE(SECOND_SEGMENT_START_INDEX))
 	#pragma message(VAR_NAME_VALUE(LED_DRIVER2))
@@ -155,6 +161,11 @@ static void serialEvent(void *)
 
 int main(void)
 {
+    #ifdef CS_PIN
+    gpio_init(CS_PIN);
+    gpio_set_dir(CS_PIN, GPIO_OUT);
+    gpio_put(CS_PIN, 1);
+    #endif
     stdio_init_all();
     
     sem_init(&base.serialSemaphore, 0, 1);

@@ -138,8 +138,16 @@ void processData()
 			{
 				statistics.print(currentTime, base.processDataHandle, base.processSerialHandle);
 
-				if (input == 0x15)
+				if (input == 0x15) {
 					printf(HELLO_MESSAGE);
+					#ifdef CS_PIN
+					gpio_put(CS_PIN, 0);
+					#endif
+				} else {
+					#ifdef CS_PIN
+					gpio_put(CS_PIN, 1);
+					#endif
+				}
 				delay(10);
 
 				currentTime = millis();
